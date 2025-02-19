@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gtmensajeria/src/presentation/widgets/DefaultButton.dart';
+import 'package:gtmensajeria/src/presentation/widgets/DefaultTextField.dart';
 
 class Logincontent extends StatelessWidget {
   const Logincontent({super.key});
@@ -27,31 +29,23 @@ class Logincontent extends StatelessWidget {
         ),
 
         // ✅ Texto vertical "Log In | Registrarse"
+        // ✅ Texto vertical "Log In | Registrarse" alineados juntos
+        // ✅ Texto vertical "Log In | Registrarse" con cada uno en su propio RotatedBox
+        // ✅ Texto vertical "Log In | Registrarse" con cada uno en su propio RotatedBox
+        // ✅ Texto vertical "Log In | Registrarse" con cada uno en su propio RotatedBox
         Positioned(
-          left: 10,
-          top: MediaQuery.of(context).size.height * 0.3,
-          child: RotatedBox(
-            quarterTurns: -1, // Gira el texto en vertical
-            child: Row(
-              // 🔹 Cambia a Row para poner "Login" y "Registro" en línea
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Login',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold),
-                ),
-
-                SizedBox(
-                    width: 30), // 🔹 Espacio entre el separador y "Registro"
-                Text(
-                  'Registro',
-                  style: TextStyle(color: Colors.white, fontSize: 23),
-                ),
-              ],
-            ),
+          left: MediaQuery.of(context).size.width *
+              0.040, // 📌 Centra en el fondo azul (15% / 2)
+          top: MediaQuery.of(context).size.height *
+              0.4, // 📌 Ajusta según la altura que prefieras
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center, // 📌 Centrado vertical
+            children: [
+              _textLoginRotated(),
+              SizedBox(height: 20), // 📌 Espacio entre "Login" y "Registro"
+              _textRegisterRotated(),
+            ],
           ),
         ),
 
@@ -110,20 +104,7 @@ class Logincontent extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.7, // 📌 Más ancho
                 child: Column(
                   children: [
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Correo',
-                        prefixIcon: Icon(Icons.email, color: Colors.black),
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide: BorderSide.none,
-                        ),
-                        labelStyle: TextStyle(color: Colors.grey),
-                      ),
-                      style: TextStyle(color: Colors.white),
-                    ),
+                    Defaulttextfield(text: 'Email', icon: Icons.email_outlined),
                     const SizedBox(
                         height: 20), // 📌 Más espacio entre los campos
                     TextFormField(
@@ -146,34 +127,58 @@ class Logincontent extends StatelessWidget {
               ),
 
               // 📌 Más espacio antes del botón
-              const SizedBox(height: 60),
+              const SizedBox(height: 40),
 
               // ✅ Botón de inicio de sesión más grande
-              Container(
-                alignment: Alignment.center,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFFFF585), // ✅ Color azul original
-                    padding: EdgeInsets.symmetric(horizontal: 50, vertical: 18),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
+              Defaultbutton(text: 'Iniciar Sesion'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'No tienes cuenta?',
+                    style: TextStyle(color: Colors.grey[500], fontSize: 17),
                   ),
-                  onPressed: () {},
-                  child: const Text(
-                    'Iniciar Sesión',
+                  SizedBox(width: 10),
+                  Text(
+                    'Registrate ahora',
                     style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 17),
+                  )
+                ],
               ),
             ],
           ),
         ),
       ],
+    );
+  }
+
+  Widget _textRegisterRotated() {
+    return RotatedBox(
+      quarterTurns: -1, // Gira "Registro" en vertical
+      child: Text(
+        'Registro',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 23,
+        ),
+      ),
+    );
+  }
+
+  Widget _textLoginRotated() {
+    return RotatedBox(
+      quarterTurns: -1, // Gira "Login" en vertical
+      child: Text(
+        'Login',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 28,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
     );
   }
 }
