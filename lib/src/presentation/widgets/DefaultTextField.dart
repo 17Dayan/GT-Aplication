@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class Defaulttextfield extends StatelessWidget {
   String text;
   IconData icon;
+  EdgeInsets margin;
 
-  Defaulttextfield({required this.text, required this.icon});
+  Defaulttextfield(
+      {required this.text, required this.icon, required this.margin});
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: margin,
       padding: EdgeInsets.all(10), // 📌 Espaciado interno
       decoration: BoxDecoration(
         // 📌 Color de fondo del Container
@@ -20,8 +24,8 @@ class Defaulttextfield extends StatelessWidget {
           children: [
             TextFormField(
               decoration: InputDecoration(
-                labelText: 'Email',
-                prefixIcon: Icon(Icons.email, color: Colors.black),
+                labelText: text,
+                prefixIcon: Icon(icon, color: Colors.black),
                 filled: true,
                 fillColor: Colors.white,
                 border: OutlineInputBorder(
