@@ -6,12 +6,14 @@ class Defaulttextfield extends StatelessWidget {
   Function(String text) onChanged;
   IconData icon;
   EdgeInsets margin;
+  String? Function(String?)? validator;
 
   Defaulttextfield(
       {required this.text,
       required this.icon,
       required this.onChanged,
-      required this.margin});
+      required this.margin,
+      this.validator});
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +32,7 @@ class Defaulttextfield extends StatelessWidget {
               onChanged: (text) {
                 onChanged(text);
               },
+              validator: validator,
               decoration: InputDecoration(
                 labelText: text,
                 prefixIcon: Icon(icon, color: Colors.black),

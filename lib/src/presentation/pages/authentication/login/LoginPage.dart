@@ -12,15 +12,11 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  LoginBloc? _bloc;
-
   @override
   Widget build(BuildContext context) {
-    _bloc = BlocProvider.of<LoginBloc>(context);
-
     return Scaffold(body: BlocBuilder<LoginBloc, Loginstate>(
       builder: (context, state) {
-        return Logincontent(_bloc);
+        return Logincontent(state);
       },
     ));
   }

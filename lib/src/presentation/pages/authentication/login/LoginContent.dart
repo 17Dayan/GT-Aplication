@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:gtmensajeria/src/presentation/pages/authentication/login/bloc/LoginBloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gtmensajeria/src/presentation/pages/authentication/login/bloc/LoginEvent.dart';
+import 'package:gtmensajeria/src/presentation/pages/authentication/login/bloc/LoginState.dart';
+import 'package:gtmensajeria/src/presentation/pages/authentication/utils/BlocFormItem.dart';
 import 'package:gtmensajeria/src/presentation/widgets/DefaultButton.dart';
 import 'package:gtmensajeria/src/presentation/widgets/DefaultTextField.dart';
 
 class Logincontent extends StatelessWidget {
-  final LoginBloc? bloc;
+  final Loginstate state;
 
-  Logincontent(this.bloc);
+  Logincontent(this.state);
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: bloc?.state.formKey,
+      key: state.formKey,
       child: Stack(
         children: [
           // ✅ Imagen de fondo que cubre toda la pantalla excepto el lado azul
@@ -97,7 +100,11 @@ class Logincontent extends StatelessWidget {
                       children: [
                         Defaulttextfield(
                             onChanged: (text) {
-                              bloc?.add(EmailChanged(email: text));
+                              context.read<LoginBloc>().add(EmailChanged(
+                                  email: BlocFormItem(value: text)));
+                            },
+                            validator: (value) {
+                              return state.email.error;
                             },
                             text: 'Email',
                             icon: Icons.email_outlined,
@@ -106,7 +113,11 @@ class Logincontent extends StatelessWidget {
                             height: 20), // 📌 Más espacio entre los campos
                         TextFormField(
                           onChanged: (text) {
-                            bloc?.add(PasswordChanged(password: text));
+                            context.read<LoginBloc>().add(PasswordChanged(
+                                password: BlocFormItem(value: text)));
+                          },
+                          validator: (value) {
+                            return state.password.error;
                           },
                           decoration: InputDecoration(
                             labelText: 'Contraseña',
@@ -134,7 +145,11 @@ class Logincontent extends StatelessWidget {
                 Defaultbutton(
                   text: 'Iniciar Sesion',
                   onPressed: () {
-                    bloc?.add(FormSubmit());
+                    if (state.formKey!.currentState!.validate()) {
+                      context.read<LoginBloc>().add(FormSubmit());
+                    } else {
+                      print('El formulario no es valido');
+                    }
                   },
                 ),
                 _textDontHaveAccount(context),
