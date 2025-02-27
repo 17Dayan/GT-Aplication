@@ -1,126 +1,148 @@
 import 'package:flutter/material.dart';
+import 'package:gtmensajeria/src/presentation/pages/authentication/login/bloc/LoginBloc.dart';
+import 'package:gtmensajeria/src/presentation/pages/authentication/login/bloc/LoginEvent.dart';
 import 'package:gtmensajeria/src/presentation/widgets/DefaultButton.dart';
 import 'package:gtmensajeria/src/presentation/widgets/DefaultTextField.dart';
 
 class Logincontent extends StatelessWidget {
-  const Logincontent({super.key});
+  final LoginBloc? bloc;
+
+  Logincontent(this.bloc);
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        // ✅ Imagen de fondo que cubre toda la pantalla excepto el lado azul
-        Positioned.fill(
-          child: Image.asset(
-            'assets/img/bg2.jpeg', // 📌 Asegúrate de que la imagen está en la carpeta correcta
-            fit: BoxFit.cover,
+    return Form(
+      key: bloc?.state.formKey,
+      child: Stack(
+        children: [
+          // ✅ Imagen de fondo que cubre toda la pantalla excepto el lado azul
+          Positioned.fill(
+            child: Image.asset(
+              'assets/img/bg2.jpeg', // 📌 Asegúrate de que la imagen está en la carpeta correcta
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
 
-        // ✅ Fondo azul SOLO en el lado izquierdo
-        Positioned(
-          left: 0,
-          width: MediaQuery.of(context).size.width *
-              0.15, // 🔵 Solo el 15% de la pantalla
-          height: MediaQuery.of(context).size.height,
-          child: Container(
-            color: Color(0xFF68CEF6),
+          // ✅ Fondo azul SOLO en el lado izquierdo
+          Positioned(
+            left: 0,
+            width: MediaQuery.of(context).size.width *
+                0.15, // 🔵 Solo el 15% de la pantalla
+            height: MediaQuery.of(context).size.height,
+            child: Container(
+              color: Color(0xFF68CEF6),
+            ),
           ),
-        ),
 
-        // ✅ Texto vertical "Log In | Registrarse"
-        // ✅ Texto vertical "Log In | Registrarse" alineados juntos
-        // ✅ Texto vertical "Log In | Registrarse" con cada uno en su propio RotatedBox
-        // ✅ Texto vertical "Log In | Registrarse" con cada uno en su propio RotatedBox
-        // ✅ Texto vertical "Log In | Registrarse" con cada uno en su propio RotatedBox
-        Positioned(
-          left: MediaQuery.of(context).size.width *
-              0.040, // 📌 Centra en el fondo azul (15% / 2)
-          top: MediaQuery.of(context).size.height *
-              0.4, // 📌 Ajusta según la altura que prefieras
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center, // 📌 Centrado vertical
-            children: [
-              _textLoginRotated(),
-              SizedBox(height: 20), // 📌 Espacio entre "Login" y "Registro"
-              _textRegisterRotated(context),
-            ],
+          // ✅ Texto vertical "Log In | Registrarse"
+          // ✅ Texto vertical "Log In | Registrarse" alineados juntos
+          // ✅ Texto vertical "Log In | Registrarse" con cada uno en su propio RotatedBox
+          // ✅ Texto vertical "Log In | Registrarse" con cada uno en su propio RotatedBox
+          // ✅ Texto vertical "Log In | Registrarse" con cada uno en su propio RotatedBox
+          Positioned(
+            left: MediaQuery.of(context).size.width *
+                0.040, // 📌 Centra en el fondo azul (15% / 2)
+            top: MediaQuery.of(context).size.height *
+                0.4, // 📌 Ajusta según la altura que prefieras
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment:
+                  MainAxisAlignment.center, // 📌 Centrado vertical
+              children: [
+                _textLoginRotated(),
+                SizedBox(height: 20), // 📌 Espacio entre "Login" y "Registro"
+                _textRegisterRotated(context),
+              ],
+            ),
           ),
-        ),
 
-        // ✅ Contenido del formulario flotando sobre la imagen
-        Positioned(
-          left: MediaQuery.of(context).size.width * 0.2,
-          top: MediaQuery.of(context).size.height *
-              0.1, // 📌 Se subió más el texto
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // ✅ Fila con "Bienvenidos GT Mensajería" y el logo a la derecha
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  // ✅ Texto "Bienvenidos GT Mensajería"
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _textWelcome('Bienvenidos'),
-                      _textWelcome('GT Mensajeria'),
-                    ],
-                  ),
-                  const SizedBox(width: 10), // 📌 Espacio entre texto y logo
-
-                  // ✅ Logo alineado a la derecha del texto
-                  _imageLogo(),
-                ],
-              ),
-
-              const SizedBox(height: 50),
-
-              // 📌 Se agregó más espacio entre "Ingresar" y los campos de entrada
-              const SizedBox(height: 80),
-
-              // ✅ Campos de entrada más anchos
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.7, // 📌 Más ancho
-                child: Column(
+          // ✅ Contenido del formulario flotando sobre la imagen
+          Positioned(
+            left: MediaQuery.of(context).size.width * 0.2,
+            top: MediaQuery.of(context).size.height *
+                0.1, // 📌 Se subió más el texto
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // ✅ Fila con "Bienvenidos GT Mensajería" y el logo a la derecha
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Defaulttextfield(
-                        text: 'Email',
-                        icon: Icons.email_outlined,
-                        margin: EdgeInsets.all(2.0)),
-                    const SizedBox(
-                        height: 20), // 📌 Más espacio entre los campos
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Contraseña',
-                        prefixIcon: Icon(Icons.lock, color: Colors.black),
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide: BorderSide.none,
-                        ),
-                        labelStyle: TextStyle(color: Colors.grey),
-                      ),
-                      obscureText: true,
-                      style: TextStyle(color: Colors.white),
+                    // ✅ Texto "Bienvenidos GT Mensajería"
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _textWelcome('Bienvenidos'),
+                        _textWelcome('GT Mensajeria'),
+                      ],
                     ),
+                    const SizedBox(width: 10), // 📌 Espacio entre texto y logo
+
+                    // ✅ Logo alineado a la derecha del texto
+                    _imageLogo(),
                   ],
                 ),
-              ),
 
-              // 📌 Más espacio antes del botón
-              const SizedBox(height: 40),
+                const SizedBox(height: 50),
 
-              // ✅ Botón de inicio de sesión más grande
-              Defaultbutton(text: 'Iniciar Sesion'),
-              _textDontHaveAccount(context),
-            ],
+                // 📌 Se agregó más espacio entre "Ingresar" y los campos de entrada
+                const SizedBox(height: 80),
+
+                // ✅ Campos de entrada más anchos
+                SizedBox(
+                  width:
+                      MediaQuery.of(context).size.width * 0.7, // 📌 Más ancho
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Defaulttextfield(
+                            onChanged: (text) {
+                              bloc?.add(EmailChanged(email: text));
+                            },
+                            text: 'Email',
+                            icon: Icons.email_outlined,
+                            margin: EdgeInsets.all(2.0)),
+                        const SizedBox(
+                            height: 20), // 📌 Más espacio entre los campos
+                        TextFormField(
+                          onChanged: (text) {
+                            bloc?.add(PasswordChanged(password: text));
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'Contraseña',
+                            prefixIcon: Icon(Icons.lock, color: Colors.black),
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: BorderSide.none,
+                            ),
+                            labelStyle: TextStyle(color: Colors.grey),
+                          ),
+                          obscureText: true,
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+                // 📌 Más espacio antes del botón
+                const SizedBox(height: 40),
+
+                // ✅ Botón de inicio de sesión más grande
+                Defaultbutton(
+                  text: 'Iniciar Sesion',
+                  onPressed: () {
+                    bloc?.add(FormSubmit());
+                  },
+                ),
+                _textDontHaveAccount(context),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

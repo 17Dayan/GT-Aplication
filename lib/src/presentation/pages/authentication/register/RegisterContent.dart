@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gtmensajeria/src/presentation/widgets/DefaultButton.dart';
-import 'package:gtmensajeria/src/presentation/widgets/DefaultTextField.dart';
+//import 'package:gtmensajeria/src/presentation/widgets/DefaultTextField.dart';
+import 'package:gtmensajeria/src/presentation/widgets/DefaultTextFieldOutlined.dart';
 
 class RegisterContent extends StatelessWidget {
   const RegisterContent({super.key});
@@ -46,43 +47,65 @@ class RegisterContent extends StatelessWidget {
                     Color(0xFFEEEEEE), // Gris claro
                     Color.fromARGB(255, 240, 237, 237), // Gris medio
                   ])),
-          child: Column(
+          child: Stack(
             children: [
-              _imageBanner(),
-              Defaulttextfield(
-                text: 'Nombre',
-                icon: Icons.person_outline,
-                margin: EdgeInsets.only(left: 10, right: 10, top: 5),
+              _imageBackground(context),
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    _imageBanner(),
+                    DefaulttextfieldOutlined(
+                      text: 'Nombre',
+                      icon: Icons.person_outline,
+                      margin: EdgeInsets.only(left: 10, right: 10, top: 5),
+                    ),
+                    DefaulttextfieldOutlined(
+                      text: 'E-mail',
+                      icon: Icons.email_outlined,
+                      margin: EdgeInsets.only(left: 10, right: 10, top: 1),
+                    ),
+                    DefaulttextfieldOutlined(
+                      text: 'Telefono',
+                      icon: Icons.phone_outlined,
+                      margin: EdgeInsets.only(left: 10, right: 10, top: 1),
+                    ),
+                    DefaulttextfieldOutlined(
+                      text: 'Contraseña',
+                      icon: Icons.lock_outline,
+                      margin: EdgeInsets.only(left: 10, right: 10, top: 1),
+                    ),
+                    DefaulttextfieldOutlined(
+                      text: 'Confirmar Contraseña',
+                      icon: Icons.lock_outline,
+                      margin: EdgeInsets.only(left: 10, right: 10, top: 1),
+                    ),
+                    Defaultbutton(
+                      onPressed: () {},
+                      text: 'Crear Usuario',
+                      margin: EdgeInsets.only(top: 10, left: 10, right: 30),
+                    ),
+                    _textIAlReadyHaveAccount(context)
+                  ],
+                ),
               ),
-              Defaulttextfield(
-                text: 'E-mail',
-                icon: Icons.email_outlined,
-                margin: EdgeInsets.only(left: 10, right: 10, top: 1),
-              ),
-              Defaulttextfield(
-                text: 'Telefono',
-                icon: Icons.phone_outlined,
-                margin: EdgeInsets.only(left: 10, right: 10, top: 1),
-              ),
-              Defaulttextfield(
-                text: 'Contraseña',
-                icon: Icons.lock_outline,
-                margin: EdgeInsets.only(left: 10, right: 10, top: 1),
-              ),
-              Defaulttextfield(
-                text: 'Confirmar Contraseña',
-                icon: Icons.lock_outline,
-                margin: EdgeInsets.only(left: 10, right: 10, top: 1),
-              ),
-              Defaultbutton(
-                text: 'Crear Usuario',
-                margin: EdgeInsets.only(top: 10, left: 10, right: 30),
-              ),
-              _textIAlReadyHaveAccount(context)
             ],
           ),
-        )
+        ),
       ],
+    );
+  }
+
+  Widget _imageBackground(BuildContext context) {
+    return Container(
+      alignment: Alignment.bottomCenter,
+      margin: EdgeInsets.only(bottom: 60),
+      child: Image.asset(
+        'assets/img/bg1.jpeg',
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        fit: BoxFit.cover,
+        opacity: AlwaysStoppedAnimation(0.2),
+      ),
     );
   }
 

@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class Defaultbutton extends StatelessWidget {
+  Function() onPressed;
   String text;
   EdgeInsetsGeometry margin;
 
   Defaultbutton({
     required this.text,
+    required this.onPressed,
     this.margin = const EdgeInsets.only(bottom: 20, left: 40, right: 40),
   });
 
@@ -23,7 +25,9 @@ class Defaultbutton extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
           ),
         ),
-        onPressed: () {},
+        onPressed: () {
+          onPressed();
+        },
         child: Text(
           text,
           style: TextStyle(

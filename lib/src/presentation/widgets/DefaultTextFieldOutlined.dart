@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class Defaulttextfield extends StatelessWidget {
+class DefaulttextfieldOutlined extends StatelessWidget {
   String text;
-  Function(String text) onChanged;
   IconData icon;
   EdgeInsets margin;
 
-  Defaulttextfield(
-      {required this.text,
-      required this.icon,
-      required this.onChanged,
-      required this.margin});
+  DefaulttextfieldOutlined(
+      {required this.text, required this.icon, required this.margin});
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +16,7 @@ class Defaulttextfield extends StatelessWidget {
       padding: EdgeInsets.all(10), // 📌 Espaciado interno
       decoration: BoxDecoration(
         // 📌 Color de fondo del Container
+        color: Color.fromRGBO(255, 255, 255, 0.2),
         borderRadius: BorderRadius.circular(20), // 📌 Bordes redondeados
       ),
       child: SizedBox(
@@ -27,18 +24,22 @@ class Defaulttextfield extends StatelessWidget {
         child: Column(
           children: [
             TextFormField(
-              onChanged: (text) {
-                onChanged(text);
-              },
               decoration: InputDecoration(
                 labelText: text,
                 prefixIcon: Icon(icon, color: Colors.black),
                 filled: true,
                 fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide.none,
-                ),
+                // border: OutlineInputBorder(
+                //  borderRadius: BorderRadius.circular(15),
+                //   borderSide: BorderSide.none,
+                // ),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue, width: 1)),
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: const Color.fromARGB(255, 116, 176, 206),
+                        width: 1)),
+
                 labelStyle: TextStyle(color: Colors.grey),
               ),
               style: TextStyle(color: Colors.black),
