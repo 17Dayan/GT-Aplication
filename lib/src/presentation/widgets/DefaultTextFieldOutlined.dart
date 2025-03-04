@@ -3,11 +3,17 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class DefaulttextfieldOutlined extends StatelessWidget {
   String text;
+  Function(String text) onChanged;
   IconData icon;
   EdgeInsets margin;
+  String? Function(String?)? validator;
 
   DefaulttextfieldOutlined(
-      {required this.text, required this.icon, required this.margin});
+      {required this.text,
+      required this.icon,
+      required this.onChanged,
+      required this.margin,
+      this.validator});
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +30,10 @@ class DefaulttextfieldOutlined extends StatelessWidget {
         child: Column(
           children: [
             TextFormField(
+              onChanged: (text) {
+                onChanged(text);
+              },
+              validator: validator,
               decoration: InputDecoration(
                 labelText: text,
                 prefixIcon: Icon(icon, color: Colors.black),
@@ -33,6 +43,7 @@ class DefaulttextfieldOutlined extends StatelessWidget {
                 //  borderRadius: BorderRadius.circular(15),
                 //   borderSide: BorderSide.none,
                 // ),
+
                 focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.blue, width: 1)),
                 enabledBorder: OutlineInputBorder(
