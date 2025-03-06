@@ -174,7 +174,7 @@ class RegisterContent extends StatelessWidget {
         GestureDetector(
           behavior: HitTestBehavior.translucent, // Permite detectar el toque
           onTap: () {
-            Navigator.pushNamed(context, '/login');
+            Navigator.pop(context);
           },
           child: Text(
             'Inicia Sesion',
@@ -213,7 +213,7 @@ class RegisterContent extends StatelessWidget {
   Widget _textLoginRotated(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/login');
+        Navigator.pop(context);
       },
       child: RotatedBox(
         quarterTurns: -1,
